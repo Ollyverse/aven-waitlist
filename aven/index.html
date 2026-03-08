@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Aven — Where Learning Flows</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-deep:    #070b14;
+      --bg-card:    #0d1220;
+      --bg-surface: #111827;
+      --border:     rgba(255,255,255,0.08);
+      --blue:       #4f8ef7;
+      --text:       #f0f4ff;
+      --text-muted: #6b7a99;
+      --text-sub:   #9aa3b8;
+    }
+
+    html, body { height: 100%; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg-deep);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── Background effects ── */
+    .bg-glow {
+      position: fixed; inset: 0;
+      pointer-events: none; z-index: 0; overflow: hidden;
+    }
+    .bg-glow::before {
+      content: '';
+      position: absolute; top: -200px; left: -200px;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(79,142,247,0.12) 0%, transparent 70%);
+      animation: drift1 12s ease-in-out infinite alternate;
+    }
+    .bg-glow::after {
+      content: '';
+      position: absolute; bottom: -150px; right: -100px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(79,142,247,0.08) 0%, transparent 70%);
+      animation: drift2 15s ease-in-out infinite alternate;
+    }
+    @keyframes drift1 { to { transform: translate(80px, 60px); } }
+    @keyframes drift2 { to { transform: translate(-60px, -80px); } }
+
+    .bg-dots {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background-image: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: relative; z-index: 10;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 22px 48px;
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+      background: rgba(7,11,20,0.6);
+    }
+
+    .nav-logo {
+      font-size: 20px; font-weight: 700; letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #74b0ff, var(--blue));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+
+    .nav-badge {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 12px; font-weight: 500; color: var(--blue);
+      background: rgba(79,142,247,0.1); border: 1px solid rgba(79,142,247,0.25);
+      padding: 5px 12px; border-radius: 20px;
+    }
+
+    /* ── Main layout ── */
+    .main {
+      position: relative; z-index: 5;
+      display: grid; grid-template-columns: 1fr 1fr;
+      min-height: calc(100vh - 69px);
+      max-width: 1200px; margin: 0 auto;
+      padding: 0 48px; gap: 80px; align-items: center;
+    }
+
+    /* ── Left copy ── */
+    .copy {
+      padding: 80px 0;
+      animation: fadeUp 0.7s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .tag {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 11.5px; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--blue); margin-bottom: 28px;
+    }
+    .tag-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--blue); box-shadow: 0 0 8px var(--blue);
+      animation: pulse 2s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.4; transform: scale(0.7); }
+    }
+
+    h1 {
+      font-size: clamp(40px, 4.5vw, 60px); font-weight: 800;
+      line-height: 1.1; letter-spacing: -0.03em;
+      color: var(--text); margin-bottom: 22px;
+    }
+    .grad {
+      background: linear-gradient(135deg, var(--blue) 0%, #74b0ff 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+
+    .sub {
+      font-size: 16px; font-weight: 400; color: var(--text-sub);
+      line-height: 1.7; max-width: 440px; margin-bottom: 48px;
+    }
+
+    .features { display: flex; flex-direction: column; gap: 14px; }
+
+    .feat {
+      display: flex; align-items: center; gap: 12px;
+      font-size: 14px; color: var(--text-sub);
+      animation: fadeUp 0.7s ease both;
+    }
+    .feat:nth-child(1) { animation-delay: .1s; }
+    .feat:nth-child(2) { animation-delay: .2s; }
+    .feat:nth-child(3) { animation-delay: .3s; }
+    .feat:nth-child(4) { animation-delay: .4s; }
+
+    .feat-icon {
+      width: 34px; height: 34px; border-radius: 8px;
+      background: var(--bg-surface); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .feat-icon svg {
+      width: 16px; height: 16px; stroke: var(--blue); fill: none;
+      stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round;
+    }
+
+    /* ── Card ── */
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 20px; padding: 40px;
+      position: relative; overflow: hidden;
+      animation: fadeUp 0.7s 0.1s ease both;
+    }
+    .card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--blue), #74b0ff, transparent);
+    }
+
+    .card-title { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; color: var(--text); margin-bottom: 6px; }
+    .card-sub   { font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin-bottom: 28px; }
+
+    /* ── Stats ── */
+    .stats {
+      display: grid; grid-template-columns: 1fr 1fr 1fr;
+      gap: 1px; background: var(--border);
+      border-radius: 12px; overflow: hidden; margin-bottom: 28px;
+    }
+    .stat { background: var(--bg-surface); padding: 14px 10px; text-align: center; }
+    .stat-num   { font-size: 20px; font-weight: 700; letter-spacing: -0.02em; color: var(--blue); }
+    .stat-label { font-size: 11px; font-weight: 500; color: var(--text-muted); margin-top: 2px; }
+
+    /* ── Form fields ── */
+    .fields { display: flex; flex-direction: column; gap: 14px; }
+
+    .field label {
+      display: block; font-size: 12px; font-weight: 600; color: var(--text-sub);
+      letter-spacing: 0.04em; margin-bottom: 7px; text-transform: uppercase;
+    }
+    .field input,
+    .field select {
+      width: 100%; background: var(--bg-surface); border: 1px solid var(--border);
+      border-radius: 10px; padding: 12px 16px;
+      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; color: var(--text);
+      outline: none; transition: border-color 0.2s, box-shadow 0.2s; appearance: none;
+    }
+    .field input::placeholder { color: var(--text-muted); }
+    .field input:focus,
+    .field select:focus {
+      border-color: rgba(79,142,247,0.5);
+      box-shadow: 0 0 0 3px rgba(79,142,247,0.08);
+    }
+    .field select option { background: var(--bg-surface); }
+
+    .select-wrap { position: relative; }
+    .select-wrap::after {
+      content: '▾'; position: absolute; right: 14px; top: 50%;
+      transform: translateY(-50%); color: var(--text-muted); pointer-events: none; font-size: 12px;
+    }
+
+    /* ── Button ── */
+    .btn {
+      width: 100%; margin-top: 6px; padding: 14px;
+      background: var(--blue); color: #fff;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14px; font-weight: 700; letter-spacing: 0.02em;
+      border: none; border-radius: 10px; cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 4px 24px rgba(79,142,247,0.25);
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .btn:hover:not(:disabled) {
+      opacity: 0.88; transform: translateY(-1px);
+      box-shadow: 0 8px 32px rgba(79,142,247,0.35);
+    }
+    .btn:disabled { opacity: 0.45; cursor: default; transform: none; }
+
+    .spinner {
+      width: 14px; height: 14px;
+      border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff;
+      border-radius: 50%; animation: spin 0.7s linear infinite;
+      display: none;
+    }
+    .btn.loading .spinner { display: block; }
+    .btn.loading .btn-label { display: none; }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .fine-print { text-align: center; font-size: 11.5px; color: var(--text-muted); margin-top: 14px; }
+
+    /* ── Error ── */
+    .error-msg {
+      font-size: 12.5px; color: #f87171; margin-top: 10px;
+      padding: 10px 14px; background: rgba(248,113,113,0.08);
+      border: 1px solid rgba(248,113,113,0.2); border-radius: 8px;
+      display: none;
+    }
+    .error-msg.visible { display: block; }
+
+    /* ── Success state ── */
+    .form-view   { display: block; }
+    .success-view {
+      display: none; text-align: center; padding: 24px 0;
+      animation: fadeUp 0.5s ease;
+    }
+    .success-view.visible { display: block; }
+    .form-view.hidden     { display: none; }
+
+    .success-ring {
+      width: 68px; height: 68px; border-radius: 50%;
+      background: rgba(79,142,247,0.12);
+      border: 1px solid rgba(79,142,247,0.3);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 22px; box-shadow: 0 0 32px rgba(79,142,247,0.2);
+    }
+    .check-svg {
+      stroke: var(--blue); stroke-width: 2.5; stroke-linecap: round;
+      stroke-linejoin: round; fill: none;
+      stroke-dasharray: 40; stroke-dashoffset: 40;
+    }
+    .check-svg.animate { animation: drawCheck 0.4s 0.15s ease forwards; }
+    @keyframes drawCheck { to { stroke-dashoffset: 0; } }
+
+    .success-title { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; color: var(--text); margin-bottom: 10px; }
+    .success-sub   { font-size: 14px; color: var(--text-muted); line-height: 1.7; }
+
+    .success-chip {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 22px; padding: 8px 18px;
+      background: rgba(79,142,247,0.1);
+      border: 1px solid rgba(79,142,247,0.25); border-radius: 20px;
+      font-size: 12px; font-weight: 600; color: var(--blue);
+    }
+
+    /* ── Footer ── */
+    footer {
+      position: relative; z-index: 5;
+      text-align: center; padding: 24px;
+      font-size: 12px; color: var(--text-muted);
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── Mobile ── */
+    @media (max-width: 820px) {
+      nav { padding: 18px 24px; }
+      .main { grid-template-columns: 1fr; padding: 0 24px; gap: 40px; }
+      .copy { padding: 48px 0 0; }
+      h1 { font-size: 36px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="bg-glow"></div>
+<div class="bg-dots"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Aven</div>
+  <div class="nav-badge">
+    <svg width="10" height="10" viewBox="0 0 24 24" fill="#4f8ef7" stroke="none"><polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9"/></svg>
+    Early Access Open
+  </div>
+</nav>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- LEFT COPY -->
+  <div class="copy">
+    <div class="tag">
+      <span class="tag-dot"></span>
+      Built for Modern Classrooms
+    </div>
+    <h1>Where Learning<br><span class="grad">Flows.</span></h1>
+    <p class="sub">
+      Streamline assignment management, track student progress, and deliver feedback — all in one elegant platform.
+    </p>
+    <div class="features">
+      <div class="feat">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+        </div>
+        <span>Rich assignment creation with file attachments</span>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        </div>
+        <span>Real-time grade tracking &amp; performance dashboards</span>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <span>Live comment threads and instant feedback</span>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <span>Analytics, class rankings &amp; insights</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT CARD -->
+  <div class="card">
+
+    <!-- SUCCESS STATE -->
+    <div class="success-view" id="successView">
+      <div class="success-ring">
+        <svg class="check-svg" id="checkSvg" width="26" height="26" viewBox="0 0 24 24">
+          <polyline points="4,13 9,18 20,6"/>
+        </svg>
+      </div>
+      <div class="success-title">You're on the list!</div>
+      <p class="success-sub">We'll reach out when Aven is ready.<br>Keep an eye on your inbox.</p>
+      <span class="success-chip">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="#4f8ef7" stroke="none"><polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9"/></svg>
+        Early Access Secured
+      </span>
+    </div>
+
+    <!-- FORM STATE -->
+    <div class="form-view" id="formView">
+      <div class="card-title">Get Early Access</div>
+      <div class="card-sub">Join educators already on the waitlist.</div>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-num">2,400+</div>
+          <div class="stat-label">Waitlist</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">Free</div>
+          <div class="stat-label">Early Access</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">Spring '26</div>
+          <div class="stat-label">Launch</div>
+        </div>
+      </div>
+
+      <div class="fields">
+        <div class="field">
+          <label for="inputName" required>Full Name</label>
+          <input type="text" id="inputName" placeholder="Jane Smith" autocomplete="name"/>
+        </div>
+        <div class="field">
+          <label for="inputEmail" required>Email Address</label>
+          <input type="email" id="inputEmail" placeholder="jane@school.edu" autocomplete="email"/>
+        </div>
+        <div class="field">
+          <label for="inputRole" required>I am a…</label>
+          <div class="select-wrap">
+            <select id="inputRole">
+              <option value="">Select your role</option>
+              <option value="teacher">Teacher / Educator</option>
+              <option value="student">Student</option>
+              <option value="admin">School Administrator</option>
+              <option value="parent">Parent / Guardian</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <button class="btn" id="submitBtn" disabled>
+          <span class="spinner"></span>
+          <span class="btn-label">Join the Waitlist →</span>
+        </button>
+
+        <div class="error-msg" id="errorMsg">Something went wrong. Please try again.</div>
+      </div>
+
+      <p class="fine-print">No spam, ever. Unsubscribe anytime.</p>
+    </div>
+
+  </div>
+</div>
+
+<footer>© 2026 Aven. Built for educators everywhere.</footer>
+
+<script>
+  const SHEET_URL = "https://script.google.com/macros/s/AKfycbyEgdUqBEnICXi7BwOn3r0Tj7M7Fer-HWHHtWIkBoYc-73dXW6qtwfYMErwpSU62YfC/exec";
+
+  const inputName  = document.getElementById("inputName");
+  const inputEmail = document.getElementById("inputEmail");
+  const inputRole  = document.getElementById("inputRole");
+  const submitBtn  = document.getElementById("submitBtn");
+  const errorMsg   = document.getElementById("errorMsg");
+  const formView   = document.getElementById("formView");
+  const successView = document.getElementById("successView");
+  const checkSvg   = document.getElementById("checkSvg");
+
+  // Enable button only when all fields are filled
+  function checkReady() {
+    const ready = inputName.value.trim() && inputEmail.value.trim() && inputRole.value;
+    submitBtn.disabled = !ready;
+  }
+
+  inputName.addEventListener("input", checkReady);
+  inputEmail.addEventListener("input", checkReady);
+  inputRole.addEventListener("change", checkReady);
+
+  function setLoading(on) {
+    if (on) {
+      submitBtn.classList.add("loading");
+      submitBtn.disabled = true;
+    } else {
+      submitBtn.classList.remove("loading");
+      checkReady();
+    }
+  }
+
+  function showSuccess() {
+    formView.classList.add("hidden");
+    successView.classList.add("visible");
+    // Trigger check animation
+    setTimeout(() => checkSvg.classList.add("animate"), 50);
+  }
+
+  function showError() {
+    errorMsg.classList.add("visible");
+  }
+
+  submitBtn.addEventListener("click", function () {
+    if (submitBtn.disabled) return;
+    setLoading(true);
+    errorMsg.classList.remove("visible");
+
+    // Create a hidden iframe to catch the form response
+    var iframe = document.createElement("iframe");
+    iframe.name = "hidden-submit";
+    iframe.style.display = "none";
+    document.body.appendChild(iframe);
+
+    // Create a hidden form targeting the iframe
+    var form = document.createElement("form");
+    form.method = "GET";
+    form.action = SHEET_URL;
+    form.target = "hidden-submit";
+    form.style.display = "none";
+
+    var fields = {
+      name:      inputName.value.trim(),
+      email:     inputEmail.value.trim(),
+      role:      inputRole.value,
+      timestamp: new Date().toISOString()
+    };
+
+    Object.keys(fields).forEach(function (key) {
+      var input = document.createElement("input");
+      input.type = "hidden";
+      input.name = key;
+      input.value = fields[key];
+      form.appendChild(input);
+    });
+
+    document.body.appendChild(form);
+
+    // On iframe load = Apps Script responded = success
+    iframe.onload = function () {
+      showSuccess();
+      document.body.removeChild(form);
+      document.body.removeChild(iframe);
+    };
+
+    // Fallback: assume success after 4s even if iframe doesn't fire
+    setTimeout(function () {
+      showSuccess();
+    }, 4000);
+
+    form.submit();
+  });
+</script>
+
+</body>
+</html>
