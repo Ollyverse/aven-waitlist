@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Aven — Where Learning Flows</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+<div class="bg-glow"></div>
+<div class="bg-dots"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Aven</div>
+  <div class="nav-badge">
+    <svg width="10" height="10" viewBox="0 0 24 24" fill="#4f8ef7" stroke="none"><polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9"/></svg>
+    Early Access Open
+  </div>
+</nav>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- LEFT COPY -->
+  <div class="copy">
+    <div class="tag">
+      
+      <div class="nav-badge">
+        <span class="tag-dot"></span>
+        Built for Modern Classrooms
+      </div>
+      
+    </div>
+    <h1>Where Learning<br><span class="grad">Flows.</span></h1>
+    <p class="sub">
+      Streamline assignment management, track student progress, and deliver feedback — all in one elegant platform.
+    </p>
+    <div class="features">
+      <div class="feat">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+        </div>
+        <span>Rich assignment creation with file attachments</span>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        </div>
+        <span>Real-time grade tracking &amp; performance dashboards</span>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <span>Live comment threads and instant feedback</span>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <span>Analytics, class rankings &amp; insights</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT CARD -->
+  <div class="card">
+
+    <!-- SUCCESS STATE -->
+    <div class="success-view" id="successView">
+      <div class="success-ring">
+        <svg class="check-svg" id="checkSvg" width="26" height="26" viewBox="0 0 24 24">
+          <polyline points="4,13 9,18 20,6"/>
+        </svg>
+      </div>
+      <div class="success-title">You're on the list!</div>
+      <p class="success-sub">We'll reach out when Aven is ready.<br>Keep an eye on your inbox.</p>
+      <span class="success-chip">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="#4f8ef7" stroke="none"><polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9"/></svg>
+        Early Access Secured
+      </span>
+    </div>
+
+    <!-- FORM STATE -->
+    <div class="form-view" id="formView">
+      <div class="card-title">Get Early Access</div>
+      <div class="card-sub">Join educators already on the waitlist.</div>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-num">Join</div>
+          <div class="stat-label">Waitlist</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">Free</div>
+          <div class="stat-label">Early Access</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">Q2 '26</div>
+          <div class="stat-label">Launch</div>
+        </div>
+      </div>
+
+      <div class="fields">
+        <div class="field">
+          <label for="inputName">Full Name</label>
+          <input type="text" id="inputName" placeholder="Jane Smith" autocomplete="name"/>
+        </div>
+        <div class="field">
+          <label for="inputEmail">Email Address</label>
+          <input type="email" id="inputEmail" placeholder="jane@school.edu" autocomplete="email"/>
+        </div>
+        <div class="field">
+          <label for="inputRole">I am a…</label>
+          <div class="select-wrap">
+            <select id="inputRole">
+              <option value="">Select your role</option>
+              <option value="teacher">Teacher / Educator</option>
+              <option value="student">Student</option>
+              <option value="admin">School Administrator</option>
+              <option value="parent">Parent / Guardian</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <button class="btn" id="submitBtn" disabled>
+          <span class="spinner"></span>
+          <span class="btn-label">Join the Waitlist →</span>
+        </button>
+
+        <div class="error-msg" id="errorMsg">Something went wrong. Please try again.</div>
+      </div>
+
+      <p class="fine-print">No spam, ever. Unsubscribe anytime.</p>
+    </div>
+
+  </div>
+</div>
+
+<footer>© 2026 Aven. Built for educators everywhere.</footer>
+
+<script>
+  const SHEET_URL = "https://script.google.com/macros/s/AKfycbyEgdUqBEnICXi7BwOn3r0Tj7M7Fer-HWHHtWIkBoYc-73dXW6qtwfYMErwpSU62YfC/exec";
+
+  const inputName  = document.getElementById("inputName");
+  const inputEmail = document.getElementById("inputEmail");
+  const inputRole  = document.getElementById("inputRole");
+  const submitBtn  = document.getElementById("submitBtn");
+  const errorMsg   = document.getElementById("errorMsg");
+  const formView   = document.getElementById("formView");
+  const successView = document.getElementById("successView");
+  const checkSvg   = document.getElementById("checkSvg");
+
+  // Enable button only when all fields are filled
+  function checkReady() {
+    const ready = inputName.value.trim() && inputEmail.value.trim() && inputRole.value;
+    submitBtn.disabled = !ready;
+  }
+
+  inputName.addEventListener("input", checkReady);
+  inputEmail.addEventListener("input", checkReady);
+  inputRole.addEventListener("change", checkReady);
+
+  function setLoading(on) {
+    if (on) {
+      submitBtn.classList.add("loading");
+      submitBtn.disabled = true;
+    } else {
+      submitBtn.classList.remove("loading");
+      checkReady();
+    }
+  }
+
+  function showSuccess() {
+    formView.classList.add("hidden");
+    successView.classList.add("visible");
+    // Trigger check animation
+    setTimeout(() => checkSvg.classList.add("animate"), 50);
+  }
+
+  function showError() {
+    errorMsg.classList.add("visible");
+  }
+
+  submitBtn.addEventListener("click", async function () {
+    if (submitBtn.disabled) return;
+    setLoading(true);
+    errorMsg.classList.remove("visible");
+
+    const qs = new URLSearchParams({
+      name:      inputName.value.trim(),
+      email:     inputEmail.value.trim(),
+      role:      inputRole.value,
+      timestamp: new Date().toISOString()
+    });
+
+    try {
+      await new Promise(function (resolve) {
+        var img = new Image();
+        img.onload = resolve;
+        img.onerror = resolve;
+        img.src = SHEET_URL + "?" + qs.toString();
+        setTimeout(resolve, 3000);
+      });
+      showSuccess();
+    } catch (e) {
+      setLoading(false);
+      showError();
+    }
+  });
+</script>
+
+</body>
+</html>
